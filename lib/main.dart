@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter25/ui/notes_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,7 +14,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      home: LoginScreen(),
+      home: const NotesScreen(),
     );
   }
 }
@@ -86,11 +87,12 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Login"),
+        title: const Text("Login"),
       ),
       body: Container(
-        margin: EdgeInsets.all(20),
+        margin: const EdgeInsets.all(20),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             TextFormField(
               textInputAction: TextInputAction.next,
@@ -103,7 +105,7 @@ class LoginScreen extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             TextFormField(
@@ -116,38 +118,43 @@ class LoginScreen extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
-            Container(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () {},
-                child: Text(
-                  "Login",
-                ),
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text("Forget your password? "),
+              ],
             ),
-            SizedBox(
-              height: 10,
+            const SizedBox(
+              height: 20,
             ),
-            Container(
-              width: double.infinity,
-              child: OutlinedButton(
-                onPressed: () {
-
-                },
-                style: ButtonStyle(
-                  shape: MaterialStateProperty.all(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(
-                        30.0,
-                      ),
+            Row(
+              children: [
+                // 3
+                // 2 / 3
+                Expanded(
+                  flex: 1,
+                  child: ElevatedButton(
+                    style:
+                        ElevatedButton.styleFrom(shape: const StadiumBorder()),
+                    onPressed: () {},
+                    child: const Text(
+                      "Login",
                     ),
                   ),
                 ),
-                child: const Text("Regitser"),
-              ),
+                const SizedBox(width: 10),
+                // 1 / 3
+                Expanded(
+                  child: OutlinedButton(
+                    onPressed: () {},
+                    style: OutlinedButton.styleFrom(shape: StadiumBorder()),
+                    child: const Text("Regitser"),
+                  ),
+                ),
+              ],
             ),
           ],
         ),
@@ -155,4 +162,3 @@ class LoginScreen extends StatelessWidget {
     );
   }
 }
-
