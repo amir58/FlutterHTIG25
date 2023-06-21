@@ -1,7 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter25/ui/add_note_screen.dart';
 
-class NotesScreen extends StatelessWidget {
-  const NotesScreen({Key? key}) : super(key: key);
+class NotesScreen extends StatefulWidget {
+  NotesScreen({Key? key}) : super(key: key);
+
+  @override
+  State<NotesScreen> createState() => _NotesScreenState();
+}
+
+class _NotesScreenState extends State<NotesScreen> {
+  List<String> notes = ["Wake up at 7 am", "Call my dad"];
 
   @override
   Widget build(BuildContext context) {
@@ -10,22 +18,24 @@ class NotesScreen extends StatelessWidget {
         title: const Text("Notes"),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          navigateToAddNoteScreen();
+        },
         child: const Icon(Icons.add),
       ),
       body: Padding(
         padding: const EdgeInsets.all(15),
         child: ListView.builder(
-          itemCount: 100,
+          itemCount: notes.length,
           itemBuilder: (context, index) {
-            return noteItem();
+            return noteItem(index);
           },
         ),
       ),
     );
   }
 
-  Widget noteItem() {
+  Widget noteItem(int index) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 10),
       padding: const EdgeInsets.all(15),
@@ -35,9 +45,9 @@ class NotesScreen extends StatelessWidget {
       ),
       child: Row(
         children: [
-          const Expanded(
+          Expanded(
             child: Text(
-              "Note details ",
+              notes[index],
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
             ),
@@ -50,7 +60,10 @@ class NotesScreen extends StatelessWidget {
             ),
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              notes.removeAt(index);
+              setState(() {});
+            },
             icon: const Icon(
               Icons.delete,
               color: Colors.red,
@@ -59,5 +72,19 @@ class NotesScreen extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  void navigateToAddNoteScreen() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) =>  AddNoteScreen(),
+      ),
+    ).then((value){
+      print("NotesScreen => $value");
+      if (value == null) return;
+      notes.add(value);
+      setState(() {});
+    });
   }
 }

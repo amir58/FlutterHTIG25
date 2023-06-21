@@ -14,9 +14,11 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      home: const NotesScreen(),
+      home:  NotesScreen(),
     );
   }
+
+
 }
 
 class FirstScreen extends StatelessWidget {
