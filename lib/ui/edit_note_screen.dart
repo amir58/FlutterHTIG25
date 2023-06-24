@@ -1,20 +1,28 @@
 import 'package:flutter/material.dart';
 
-class AddNoteScreen extends StatefulWidget {
-  AddNoteScreen({Key? key}) : super(key: key);
+class EditNoteScreen extends StatefulWidget {
+  EditNoteScreen({Key? key, required this.note}) : super(key: key);
+
+  String note;
 
   @override
-  State<AddNoteScreen> createState() => _AddNoteScreenState();
+  State<EditNoteScreen> createState() => _EditNoteScreenState();
 }
 
-class _AddNoteScreenState extends State<AddNoteScreen> {
+class _EditNoteScreenState extends State<EditNoteScreen> {
   final noteController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    noteController.text = widget.note;
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Add Note"),
+        title: const Text("Edit Note"),
       ),
       body: Padding(
         padding: const EdgeInsets.all(15),
@@ -35,7 +43,7 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
                   addNewNote();
                 },
                 style: ElevatedButton.styleFrom(shape: const StadiumBorder()),
-                child: const Text("Add Note"),
+                child: const Text("Update"),
               ),
             )
           ],
@@ -51,5 +59,4 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
 
     Navigator.pop(context, note);
   }
-
 }

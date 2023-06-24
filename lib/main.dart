@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter25/ui/notes_screen.dart';
 
+import 'blog/blog_screen.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -12,9 +14,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        primarySwatch: Colors.green,
+        primarySwatch: Colors.blueGrey,
       ),
-      home:  NotesScreen(),
+      home:  BlogScreen(),
     );
   }
 
