@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class AddNoteScreen extends StatefulWidget {
@@ -9,6 +11,8 @@ class AddNoteScreen extends StatefulWidget {
 
 class _AddNoteScreenState extends State<AddNoteScreen> {
   final noteController = TextEditingController();
+
+  final firestore = FirebaseFirestore.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +53,19 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
 
     if (note.isEmpty) return;
 
-    Navigator.pop(context, note);
-  }
+    final String id = DateTime.now().millisecondsSinceEpoch.toString();
 
+    final String userId = FirebaseAuth.instance.currentUser!.uid;
+
+    // Map<String, dynamic> data = {};
+    Map<String, dynamic> data = {
+      "id": id,
+      "userId": userId,
+      "note": note,
+    };
+
+    firestore.collection("notes").doc(id).set(data);
+
+    Navigator.pop(context);
+  }
 }

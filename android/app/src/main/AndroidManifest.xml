@@ -1,6 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.companyname.appname.flutter25">
    <application
+        android:usesCleartextTraffic="true"
         android:label="flutter25"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
