@@ -14,6 +14,7 @@ class NotesScreen extends StatefulWidget {
 
 class _NotesScreenState extends State<NotesScreen> {
   final firestore = FirebaseFirestore.instance;
+  final auth = FirebaseAuth.instance;
 
   // List<String> notes = ["Wake up at 7 am", "Call my dad"];
   // 0 => Wake up at 7 am
@@ -109,7 +110,11 @@ class _NotesScreenState extends State<NotesScreen> {
   }
 
   void getNotesFromFirestore() {
-    firestore.collection("notes").get().then((value) {
+    String userId = auth.currentUser!.uid;
+
+    firestore.collection("notes")
+        .where("userId" , isEqualTo: userId)
+        .get().then((value) {
       notes.clear();
       for (var document in value.docs) {
         notes.add(document.data());
@@ -134,14 +139,11 @@ class _NotesScreenState extends State<NotesScreen> {
       context,
       MaterialPageRoute(
         builder: (context) => EditNoteScreen(
-          note: notes[index]['note'],
+          note: notes[index],
         ),
       ),
     ).then((value) {
-      print("NotesScreen => $value");
-      if (value == null) return;
-      notes[index] = value;
-      setState(() {});
+      getNotesFromFirestore();
     });
   }
 }

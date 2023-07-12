@@ -1,21 +1,25 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class EditNoteScreen extends StatefulWidget {
   EditNoteScreen({Key? key, required this.note}) : super(key: key);
 
-  String note;
+  Map<String, dynamic> note;
 
   @override
   State<EditNoteScreen> createState() => _EditNoteScreenState();
 }
 
 class _EditNoteScreenState extends State<EditNoteScreen> {
+  final firestore = FirebaseFirestore.instance;
+
   final noteController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    noteController.text = widget.note;
+    noteController.text = widget.note['note'];
   }
 
   @override
@@ -55,7 +59,16 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
   void addNewNote() {
     String note = noteController.text;
 
-    if (note.isEmpty) return;
+    if (note.isEmpty) {
+      Fluttertoast.showToast(msg: "Note is required");
+      return;
+    }
+
+    Map<String, dynamic> data = {
+      'note': note,
+    };
+
+    firestore.collection("notes").doc(widget.note['id']).update(data);
 
     Navigator.pop(context, note);
   }
